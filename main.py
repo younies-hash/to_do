@@ -21,8 +21,8 @@ late_save = False #when  changing multiple todos at once lat_save tells the app 
 completed = 0
 last_width = [0]
 
-FILE = 'todo.json'
-CONFIG_FILE = 'config.json'
+FILE = 'todo.json' #save file
+CONFIG_FILE = 'config.json' #config file
 
 
 def load_config():
@@ -62,7 +62,7 @@ editmenu.add_command(label="Uncheck All", command=lambda: toggle_all(0))
 editmenu.add_command(label="Clear List", command=lambda: del_all())
 
 
-#add note
+#interface for adding todos
 input_frame = tk.Frame(root, bg=BACKGROUND)
 
 entry = tk.Entry(input_frame, font=todo_font, width=30, bd=4, relief=tk.FLAT, highlightthickness=2,highlightbackground='#cccccc', highlightcolor='#5865f2',fg = GHOST_TEXT_COLOR)
@@ -72,7 +72,6 @@ btn = tk.Button(input_frame, font=todo_font, text="Add +",width=10,bd=4, relief=
 #todo  list
 scroll = tk.Scrollbar(root)
 list_frame = tk.Frame(root, bg=BACKGROUND)
-# scroll.config(command=list_frame.yview)
 
 #footer
 summery = tk.Label(list_frame, font=todo_font, text=f"Completed: {completed} out of {todos_count}", bg=BACKGROUND, fg=THEME)
@@ -128,13 +127,13 @@ def add_todo_widget(todo):
     todo.widget = checkbox
     rows.append(todo_row)
   
-#   key bindings
+# key bindings
 def select_todo(index):
     global selected_todo_index
     if selected_todo_index is not None:
         rows[selected_todo_index].config(bg=BACKGROUND)
     selected_todo_index = index
-    rows[index].config(bg=ACTIVE_THEME)
+    rows[index].config(bg=ACTIVE_THEME) # TODO:change this
     print(f"now selected: {selected_todo_index}")
     
 def on_arrow(direction):
@@ -209,7 +208,6 @@ def refresh():
         todos_count = 0
     summery.config(text=f"Completed: {completed} out of {todos_count}")
 
-# unimplemented
 def resize(event):
     if event.widget is not root:
         return
@@ -228,7 +226,7 @@ def toggle_all(val):
     late_save = True
     for todo in todos:
         if todo.status.get() != val:
-            todo.widget.toggle()
+            todo.widget.toggle() # don't call todo.toggle() here, todo.status changes automatically here
     late_save = False
     autosave()
 
