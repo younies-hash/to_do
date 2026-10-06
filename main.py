@@ -1,7 +1,7 @@
 import json, os
 from tkinter import Tk
 import tkinter as tk
-from notes import Todo
+from todo import Todo
 import tkinter.font as tkfont
 
 #theme
